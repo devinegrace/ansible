@@ -23,4 +23,5 @@
       copy:
        src: "{{ backup_location.backup_path }}"
        dest: "/{{ backuppath }}/{{ inventory_hostname }}_{{ ansible_host }}.cfg"
+       remote_src: true
       when: ansible_network_os == 'ios'
