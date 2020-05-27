@@ -18,18 +18,7 @@
       ios_config:
         backup: yes
       register: backup_location
-      when: ansible_network_os == 'ios'
-
-    - name : copy switch config backup to backup directory
       copy:
        src: "{{ backup_location.shortname }}"
        dest: "/{{ backuppath }}/{{ ansible_host }}.cfg"
       when: ansible_network_os == 'ios'
-
-    - name: Backup switch (nxos)
-      nxos_config:
-        backup: yes
-        backup_options:
-          filename: "{{ ansible_host }}.cfg"
-          dir_path: "{{ backuppath }}"
-      when: ansible_network_os == 'nxos'
