@@ -1,0 +1,36 @@
+---
+- hosts: testnx,testios
+  gather_facts: no
+
+  vars:
+    date_Y: "{{ lookup('pipe', 'date +%Y') }}"
+    date_M: "{{ lookup('pipe', 'date +%m') }}"
+    date_D: "{{ lookup('pipe', 'date +%m%d-%H%M') }}"
+    backuppath: "/tmp/swbackups/{{ date_Y }}/{{ date_M }}"
+
+  tasks:
+    - name: Create backup dir
+      file:
+        path: "{{ backuppath }}"
+        state: directory
+        recurse: yes
+
+    - name: Backup switch (ios)
+      ios_config:
+        backup: yes
+      register: backup_location
+      when: ansible_network_os == 'ios'
+
+    - name : copy switch config backup to backup directory
+      copy:
+       src: "{{ backup_location.backup_path }}"
+       dest: "/{{ backuppath }}/{{ inventory_hostname }}_{{ ansible_host }}.cfg"
+      when: ansible_network_os == 'ios'
+
+    - name: Backup switch (nxos)
+      nxos_config:
+        backup: yes
+        backup_options:
+          filename: "/{{ backuppath }}/{{ inventory_hostname }}_{{ ansible_host }}.cfg"
+          dir_path: "{{ backuppath }}"
+      when: ansible_network_os == 'nxos'
