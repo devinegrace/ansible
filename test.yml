@@ -1,5 +1,5 @@
 ---
-- hosts: testnx,testios
+- hosts: hqswitch
   gather_facts: no
 
   vars:
