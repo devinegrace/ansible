@@ -1,1 +1,13 @@
 
+---
+- hosts: hqswitch
+  gather_facts: yes
+
+  tasks:
+    - name: Backup switch (ios)
+      ios_config:
+        src: ios_template.j2
+        backup: yes
+        backup_options:
+          filename : {{ ansible_host }}.cfg
+          dir_path : /home/awx
