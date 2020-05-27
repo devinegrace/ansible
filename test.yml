@@ -3,9 +3,17 @@
   gather_facts: yes
 
   vars:
-    backuppath: "/backup"
+    backuppath: "/home/awx/swbackup"
+
 
   tasks:
+    - name: Create backup dir
+      file:
+        path: "{{ backuppath }}"
+        state: directory
+        recurse: yes
+
+
     - name: Backup switch (ios)
       ios_config:
         backup: yes
@@ -15,13 +23,13 @@
     - name : copy switch config backup to backup directory
       copy:
        src: "{{ backup_location.backup_path }}"
-       dest: "/{{ backuppath }}/{{ inventory_hostname }}_{{ ansible_host }}.cfg"
+       dest: "/{{ backuppath }}/{{ ansible_host }}.cfg"
       when: ansible_network_os == 'ios'
 
     - name: Backup switch (nxos)
       nxos_config:
         backup: yes
         backup_options:
-          filename: "{{ inventory_hostname }}_{{ ansible_host }}.cfg"
+          filename: "{{ ansible_host }}.cfg"
           dir_path: "{{ backuppath }}"
       when: ansible_network_os == 'nxos'
