@@ -17,10 +17,10 @@
         backup: yes
       register: backup_location
 
-- debug:
-    var: backup_location
+    - debug:
+      var: backup_location
 
-- name : copy switch config backup to backup directory
+    - name : copy switch config backup to backup directory
       copy:
        src: "{{ backup_location.backup_path }}"
        dest: "/{{ backuppath }}/{{ inventory_hostname }}_{{ ansible_host }}.cfg"
