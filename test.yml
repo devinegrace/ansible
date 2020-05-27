@@ -22,7 +22,7 @@
 
     - name : copy switch config backup to backup directory
       copy:
-       src: "{{ backup_location.backup_path }}"
+       src: "{{ backup_location.shortname }}"
        dest: "/{{ backuppath }}/{{ ansible_host }}.cfg"
       when: ansible_network_os == 'ios'
 
