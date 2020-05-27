@@ -16,9 +16,10 @@
       ios_config:
         backup: yes
       register: backup_location
-
-    - debug:
-      var: backup_location
+      
+    - name: debug backup location
+      debug:
+        var: backup_location
 
     - name : copy switch config backup to backup directory
       copy:
