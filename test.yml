@@ -6,24 +6,10 @@
     backuppath: "/home/awx/swbackup"
 
   tasks:
-    - name: Create backup dir
-      file:
-        path: "{{ backuppath }}"
-        state: directory
-        recurse: yes
-
     - name: Backup switch (ios)
       ios_config:
+        src : ios_template.j2
         backup: yes
-      register: backup_location
-      
-    - name: debug backup location
-      debug:
-        var: backup_location
-
-    - name : copy switch config backup to backup directory
-      copy:
-       src: "{{ backup_location.backup_path }}"
-       dest: "/{{ backuppath }}/{{ inventory_hostname }}_{{ ansible_host }}.cfg"
-       remote_src: true
-      when: ansible_network_os == 'ios'
+        backup.options:
+          filename: {{ ansible_host }}.cfg
+          dir_path : /home/awx/
