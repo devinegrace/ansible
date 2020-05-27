@@ -18,7 +18,9 @@
       ios_config:
         backup: yes
       register: backup_location
+      
+    - name : copy switch config backup to backup directory
       copy:
-       src: "{{ backup_location.shortname }}"
-       dest: "/{{ backuppath }}/{{ ansible_host }}.cfg"
+       src: "{{ backup_location.backup_path }}"
+       dest: "/{{ backuppath }}/{{ inventory_hostname }}_{{ ansible_host }}.cfg"
       when: ansible_network_os == 'ios'
