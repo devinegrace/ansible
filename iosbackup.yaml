@@ -1,8 +1,8 @@
 ---
 - hosts: all
-  gather_facts: yes
+gather_facts: yes
 
-  tasks:
-    - name: Backup switch (ios)
-      ios_config:
-        backup: yes
+tasks:
+- name: Backup switch (ios)
+ios_config:
+backup: yes
