@@ -1,0 +1,10 @@
+- hosts: all
+  gather_facts: no
+
+    tasks:
+  
+    - name: Backup switch (ios)
+      ios_config:
+        backup: yes
+      register: backup_location
+      when: ansible_network_os == 'ios'
