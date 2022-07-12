@@ -1,6 +1,6 @@
 
 ---
-- hosts: hqswitch
+- hosts: all
   gather_facts: yes
 
   tasks:
