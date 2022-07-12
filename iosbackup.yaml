@@ -2,8 +2,7 @@
 - hosts: all
   gather_facts: no
 
-    tasks:
-  
+  tasks:
     - name: Backup switch (ios)
       ios_config:
         backup: yes
