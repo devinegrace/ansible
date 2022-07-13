@@ -1,5 +1,6 @@
 ---
-- hosts: all
+- name: switch_backup
+  hosts: all
   gather_facts: yes
   tasks:
     - name: Backup switch (ios)
