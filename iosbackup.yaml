@@ -3,7 +3,7 @@
   hosts: all
   gather_facts: no
   tasks:
-    - name: Backup switch (ios)
+    - name: Backup
       cisco.ios.ios_config:
         backup: yes
         src: ios_template.j2
